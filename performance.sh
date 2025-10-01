@@ -2,9 +2,14 @@
 
 # --- Configuración ---
 # Número de veces que se ejecutará cada binario para promediar
-NUM_RUNS=10 
+NUM_RUNS=50
 # Archivos binarios a probar
 BINARIES=("./o3_dot" "./neon_dot")
+
+# Variables para almacenar los tiempos promedio
+TIME_STANDARD=0.0
+TIME_NEON=0.0
+
 # ---------------------
 
 # Función para ejecutar un binario y calcular el tiempo promedio
@@ -19,12 +24,12 @@ run_and_average() {
     # Bucle para ejecutar el binario NUM_RUNS veces
     for i in $(seq 1 $NUM_RUNS); do
         # Ejecutar el binario y capturar la salida
-        output=$($binary) 
-        
+        output=$($binary)
+
         # Parsear el tiempo de ejecución usando grep y awk
         # Busca la línea "Tiempo de ejecución: X.XXXX microsegundos"
         # y extrae el valor numérico.
-        time_value=$(echo "$output" | grep "Tiempo de ejecución:" | awk '{print $3}')
+        time_value=$(echo "$output" | grep "Tiempo de ejecución:" | awk '{print $4}')
 
         # Verificar si el valor es un número flotante válido
         if [[ "$time_value" =~ ^[0-9]*\.[0-9]+$ ]]; then
