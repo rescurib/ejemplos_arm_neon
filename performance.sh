@@ -45,7 +45,7 @@ run_and_average() {
     if [ "$run_count" -gt 0 ]; then
         # bc -l permite la aritmética de punto flotante
         average_time=$(echo "scale=4; $total_time / $run_count" | bc -l)
-        echo "Promedio de tiempo de ejecución ($run_count ejecuciones):"
+        echo "Promedio de tiempo de ejecución:"
         echo "   $average_time microsegundos"
 
         # Asignar el promedio a la salida en formato string
