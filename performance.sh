@@ -15,13 +15,13 @@ TIME_NEON=0.0
 # Función para ejecutar un binario y calcular el tiempo promedio
 run_and_average() {
     local binary=$1
+    local output_value=$2
     local total_time=0.0
     local run_count=0
     local time_value
 
     echo "--- Ejecutando: $binary (x$NUM_RUNS veces) ---"
 
-    # Bucle para ejecutar el binario NUM_RUNS veces
     for i in $(seq 1 $NUM_RUNS); do
         # Ejecutar el binario y capturar la salida
         output=$($binary)
@@ -37,7 +37,7 @@ run_and_average() {
             total_time=$(echo "$total_time + $time_value" | bc -l)
             run_count=$((run_count + 1))
         else
-            echo "ADVERTENCIA: No se pudo parsear el tiempo de ejecución en la ejecución $i."
+            echo "EROR: No se pudo parsear el tiempo de ejecución de $i."
         fi
     done
 
@@ -47,6 +47,9 @@ run_and_average() {
         average_time=$(echo "scale=4; $total_time / $run_count" | bc -l)
         echo "Promedio de tiempo de ejecución ($run_count ejecuciones):"
         echo "   $average_time microsegundos"
+
+        # Asignar el promedio a la salida en formato string
+        printf -v "$output_value" "%s" "$average_time"
     else
         echo "Error: No se pudo obtener ningún tiempo de ejecución válido."
     fi
@@ -64,7 +67,20 @@ for bin in "${BINARIES[@]}"; do
     fi
 done
 
-# 2. Ejecutar la función para cada binario
-for bin in "${BINARIES[@]}"; do
-    run_and_average "$bin"
-done
+# 2. Ejecutar la función para cada binario y almacenar los resultados
+run_and_average "${BINARIES[0]}" TIME_STANDARD
+run_and_average "${BINARIES[1]}" TIME_NEON
+
+# --- 3. Calcular la mejora porcentual ---
+echo "========================================"
+
+# bc -l permite la aritmética de punto flotante
+improvement_percent=$(echo "scale=2; (($TIME_STANDARD - $TIME_NEON) / $TIME_STANDARD) * 100" | bc -l)
+
+if [ "$(echo "$improvement_percent > 0" | bc -l)" -eq 1 ]; then
+        echo "Mejora por Optimización NEON: ${improvement_percent}%"
+else
+        echo "⚠️ No hubo mejora (o hubo regresión): ${improvement_percent}%"
+fi
+
+echo "========================================"
