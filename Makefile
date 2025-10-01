@@ -1,7 +1,7 @@
 # Makefile for benchmarking o3_dot vs neon_dot
 
 CC      := gcc
-SRC     := neon_dot.c
+SRC     := dot.c
 
 # Optimización estandar
 CFLAGS  := -O3
@@ -18,8 +18,8 @@ o3_dot: $(SRC)
 	$(CC) $(CFLAGS) $< -o $@
 
 # Target optmizado con NEON
-neon_dot: $(SRC)
-	$(CC) $(NEON_CFLAGS) $< -o $@
+neon: $(SRC)
+	$(CC) $(NEON_CFLAGS) $< -o neon_dot
 
 # Limpieza de archivos generados
 .PHONY: clean

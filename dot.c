@@ -36,7 +36,7 @@ int main(char arg, char** argv){
     }
 
     printf("Resultado: %.4f \n", result/ITERATIONS);
-    printf("Tiempo de ejecución: %f microsegundos\n",exec_time);
+    printf("Tiempo de ejecución: %.4f microsegundos\n",exec_time);
 
     free(array_a);
     free(array_b);
