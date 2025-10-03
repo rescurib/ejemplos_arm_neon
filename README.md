@@ -1,4 +1,4 @@
-# Aceleración de código en C con arquitura NEON de ARM
+# Aceleración de código en C con arquitectura NEON de ARM
 
 ARM NEON es el nombre de una extensión avanzada de arquitectura SIMD (Instrucción Única, Datos Múltiples) disponible para las familias ARM Cortex A y R.
 
@@ -12,11 +12,11 @@ Es importa saber el nombre del procesador que vamos a utilizar y el conjunto de 
 | ----- | ----- | ----- |
 | **Raspberry Pi 3 Model B/B+** | Cortex-A53 | ARMv8-A (64/32-bit) |
 | **Raspberry Pi 4 Model B** | Cortex-A72 | ARMv8-A (64/32-bit) |
-| **Raspberry Pi 5** | Cortex-A76 | ARMv8-A (64/32-bit) |
+| **Raspberry Pi 5** | Cortex-A76 | ARMv8.2-A (64/32-bit) |
 
 ## Ejemplo con Raspberry 3B+
 
-El programa que usararémos calcula el producto punto entre dos vectores 2048 elementos *float* cada uno. El loop de cómputo es:
+El programa que usararémos calcula el producto punto entre dos vectores 4096 elementos *float* cada uno. El loop de cómputo es:
 ```C
 for(j=0;j<ARRAY_SIZE;j++)
 {
@@ -102,6 +102,6 @@ Mejora por Optimización NEON: 61.00%
 ========================================
 ```
 
-## BONUS: Ejemplo de optimización manual usando *intrinsecos*
+## BONUS: Ejemplo de optimización manual usando *intrínsecos*
 
 [pendiente]

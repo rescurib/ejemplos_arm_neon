@@ -80,7 +80,7 @@ improvement_percent=$(echo "scale=2; (($TIME_STANDARD - $TIME_NEON) / $TIME_STAN
 if [ "$(echo "$improvement_percent > 0" | bc -l)" -eq 1 ]; then
         echo "Mejora por Optimización NEON: ${improvement_percent}%"
 else
-        echo "⚠️ No hubo mejora (o hubo regresión): ${improvement_percent}%"
+        echo "No hubo mejora (o hubo regresión): ${improvement_percent}%"
 fi
 
 echo "========================================"
