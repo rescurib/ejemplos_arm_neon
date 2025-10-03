@@ -1,4 +1,4 @@
-# Makefile for benchmarking o3_dot vs neon_dot
+# Makefile para compilar dot.c con optimizaciones estándar y NEON
 
 CC      := gcc
 SRC     := dot.c
@@ -6,7 +6,7 @@ SRC     := dot.c
 # Optimización estandar
 CFLAGS  := -O3
 
-# Banderas de optimización NEON
+# Optimización NEON
 NEON_CFLAGS := -O3 -march=armv8-a+simd -mtune=cortex-a53 \
                -ftree-vectorize -funsafe-math-optimizations \
                -fopt-info-vec-optimized
