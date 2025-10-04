@@ -38,7 +38,7 @@ void neon_mult_and_acc(const float* a, const float* b, float* result, int size)
 }
 
 float get_time_diff(struct timespec start, struct timespec end){
-    return (end.tv_sec - start.tv_sec)*1e3 + (end.tv_nsec - start.tv_nsec)/1e6;
+    return (end.tv_sec - start.tv_sec)*1e9 + (end.tv_nsec - start.tv_nsec);
 }
 
 void main(int argc, char** argv){
@@ -68,19 +68,19 @@ void main(int argc, char** argv){
                 scalar_time += get_time_diff(t0, t1);
         }
         printf("Resultado escalar: %.4f \n", scalar_result);
-        printf("Tiempo de ejecución escalar: %.4f microsegundos \n", scalar_time / ITERATIONS);
+        printf("Tiempo de ejecución escalar: %.4f nanosegundos \n", scalar_time / ITERATIONS);
 
     
     for(i=0; i < ITERATIONS; i++)
     {
       clock_gettime(CLOCK_MONOTONIC,&t0);
       neon_mult_and_acc(array_a,array_b,&neon_result, ARRAY_SIZE);
-      clock_gettime(CLOCK_MONOTONIC,&end);
+      clock_gettime(CLOCK_MONOTONIC,&t1);
       neon_time += get_time_diff(t0,t1);
     }
     
     printf("Resultado NEON: %.4f \n",neon_result);
-    printf("Tiempo de ejecución NEON: %.f microsegundos \n",neon_time / ITERATIONS);
+    printf("Tiempo de ejecución NEON: %.f nanosegundos \n",neon_time / ITERATIONS);
     
     printf("Porcentaje de mejora: %.2f%% \n", (float)(scalar_time/neon_time)*100);
 }
