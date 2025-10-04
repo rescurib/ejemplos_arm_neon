@@ -70,7 +70,10 @@ NEON_CFLAGS := -O3 -march=armv8-a+simd -mtune=cortex-a53 \
 
 `-fopt-info-vec-optimized`
 - Indica al compilador que **muestre en la salida** qué bucles fueron efectivamente **vectorizados**.  
-- Útil para verificar que la vectorización automática está funcionando.  
+- Útil para verificar que la vectorización automática está funcionando. La salida para este ejemplo es:
+```Bash
+dot.c:30:18: optimized: loop vectorized using 16 byte vectors
+``` 
 
 ### Compilación y evaluación de desempeño
 ```Bash
@@ -91,17 +94,33 @@ chmod +x performance.sh
 ```Bash
 --- Ejecutando: ./o3_dot (x50 veces) ---
 Promedio de tiempo de ejecución:
-   41289.3013 microsegundos
+   43624.6517 nanosegundos
 
 --- Ejecutando: ./neon_dot (x50 veces) ---
 Promedio de tiempo de ejecución:
-   15756.3316 microsegundos
+   15954.4456 nanosegundos
 
 ========================================
-Mejora por Optimización NEON: 61.00%
+Mejora por Optimización NEON: 63.00%
 ========================================
 ```
 
 ## BONUS: Ejemplo de optimización manual usando *intrínsecos*
 
 [pendiente]
+
+**Compilación**:
+```Bash
+gcc -O3 neon_intrinsics.c -o neon_manual -lm
+```
+
+**Resultado:**
+```Bash
+Resultado escalar: 1033.4281
+Tiempo de ejecución escalar: 40207.2840 nanosegundos
+Resultado NEON: 1033.4296
+Tiempo de ejecución NEON: 19887 nanosegundos
+Porcentaje de mejora: 202.18%
+```
+
+¡202%! Hay un claro método ganador. 
