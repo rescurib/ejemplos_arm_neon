@@ -107,7 +107,33 @@ Mejora por Optimización NEON: 63.00%
 
 ## BONUS: Ejemplo de optimización manual usando *intrínsecos*
 
-[pendiente]
+Los `intrínsecos` son funciones que están mapeados a una secuencia especifica de intrucciones (o incluso una sola, según el caso). Cuando el compilador los ve, no se la piensa demasiado, simplemente ya sabe que hacer. En el caso de NEON, son funciones de las que podemos estar seguros que se implementaran vectorialmente. Pueden encontrar la documentación de los intrínsicos de NEON [acá](https://developer.arm.com/documentation/dui0491/i/Using-NEON-Support/Intrinsics?lang=en)
+
+**Producto punto con intrínsicos NEON**:
+```C
+#include <arm_neon.h>
+void neon_mult_and_acc(const float* a, const float* b, float* result, int size)
+{
+    float32x4_t va, vb;
+    float32x4_t vacc = vdupq_n_f32(0.0f);
+    int i;
+    for(i = 0; i<(size-4); i += 4)
+    {
+        va     = vld1q_f32(&a[i]);
+        vb     = vld1q_f32(&b[i]);
+        vacc   = vmlaq_f32(vacc,va,vb);
+    }
+
+    float32x2_t sum_vectors = vadd_f32(vget_low_f32(vacc),vget_high_f32(vacc));
+    *result = vget_lane_f32(sum_vectors,0) + vget_lane_f32(sum_vectors,1);
+
+    // Elementos restantes
+    for(; i<size; i++)
+    {
+        *result += a[i]*b[i];
+    }
+}
+```
 
 **Compilación**:
 ```Bash
