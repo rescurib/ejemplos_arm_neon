@@ -76,5 +76,6 @@ void main(int argc, char** argv){
     double neon_time = get_time_diff(start,end);
     printf("Resultado escalar: %.4f \n",neon_result);
     printf("Tiempo de ejecución SIMD: %.f microsegundos \n",neon_time);
-
+    
+    printf("Porcentaje de mejora: %.2f%% \n", (float)(scalar_time/neon_time)*100);
 }
