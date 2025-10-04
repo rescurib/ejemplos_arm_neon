@@ -4,7 +4,7 @@
 #include <arm_neon.h>
 
 #define ARRAY_SIZE 2048
-#define ITERATIONS 100000
+#define ITERATIONS 50
 
 void mult_and_acc(const float* a, const float* b, float* result, int size) 
 {
@@ -57,15 +57,20 @@ void main(int argc, char** argv){
         array_b[i] = (float)rand()/RAND_MAX;
     }
 
-    clock_gettime(CLOCK_MONOTONIC,&start);
-    for(i=0; i < ITERATIONS; i++)
-    {
-      mult_and_acc(array_a,array_b,&scalar_result,ARRAY_SIZE);
-    }
-    clock_gettime(CLOCK_MONOTONIC,&end);
-    double scalar_time = get_time_diff(start,end);
-    printf("Resultado escalar: %.4f \n",scalar_result);
-    printf("Tiempo de ejecución escalar: %.f nanosegundos \n",scalar_time);
+        double scalar_time = 0.0;
+        double neon_time = 0.0;
+        struct timespec t0, t1;
+
+        // Scalar timing: measure each iteration separately and accumulate
+        for(i=0; i < ITERATIONS; i++)
+        {
+                clock_gettime(CLOCK_MONOTONIC, &t0);
+                mult_and_acc(array_a, array_b, &scalar_result, ARRAY_SIZE);
+                clock_gettime(CLOCK_MONOTONIC, &t1);
+                scalar_time += get_time_diff(t0, t1);
+        }
+        printf("Resultado escalar: %.4f \n", scalar_result);
+        printf("Tiempo de ejecución escalar: %.4f microsegundos \n", scalar_time / ITERATIONS);
 
     clock_gettime(CLOCK_MONOTONIC,&start);
     for(i=0; i < ITERATIONS; i++)

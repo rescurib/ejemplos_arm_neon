@@ -4,7 +4,7 @@ ARM NEON es el nombre de una extensión avanzada de arquitectura SIMD (Instrucci
 
 > Los registros NEON se consideran vectores de elementos del mismo tipo de datos, y las instrucciones NEON operan sobre múltiples elementos simultáneamente. Esta tecnología admite diversos tipos de datos, incluyendo operaciones con números enteros y de punto flotante.
 
-En otras palabras, esta arquitectura nos permite tener paralelismo a nivel de instrucción. Ya he hablado antes de como aprovechar el paralelismo a nivel de nucleos, pero en este ejemplo voy a mostrar como acerelerar código únicamente a través de banderas de compilación.
+En otras palabras, esta arquitectura nos permite tener paralelismo a nivel de instrucción. Ya he hablado antes de como aprovechar el paralelismo a nivel de nucleos, pero en este ejemplo voy a mostrar como acelerar código únicamente a través de banderas de compilación.
 
 Es importa saber el nombre del procesador que vamos a utilizar y el conjunto de instrucciones de arquitectura (ISA) que utiliza. En el caso de los últimos modelos de Rapberry Pi:
 
