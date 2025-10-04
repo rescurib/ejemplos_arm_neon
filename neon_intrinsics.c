@@ -3,8 +3,8 @@
 #include <time.h>
 #include <arm_neon.h>
 
-#define ARRAY_SIZE 2048
-#define ITERATIONS 50
+#define ARRAY_SIZE 4096
+#define ITERATIONS 1000
 
 void mult_and_acc(const float* a, const float* b, float* result, int size) 
 {
@@ -48,7 +48,9 @@ void main(int argc, char** argv){
     float scalar_result = 0.0f;
     float neon_result   = 0.0f;
     
-    struct timespec start, end;
+    double scalar_time = 0.0;
+    double neon_time = 0.0;
+    struct timespec t0, t1;
 
     srand(172);
     for(i = 0; i < ARRAY_SIZE; i++)
@@ -56,10 +58,6 @@ void main(int argc, char** argv){
         array_a[i] = (float)rand()/RAND_MAX;
         array_b[i] = (float)rand()/RAND_MAX;
     }
-
-        double scalar_time = 0.0;
-        double neon_time = 0.0;
-        struct timespec t0, t1;
 
         // Scalar timing: measure each iteration separately and accumulate
         for(i=0; i < ITERATIONS; i++)
@@ -72,15 +70,17 @@ void main(int argc, char** argv){
         printf("Resultado escalar: %.4f \n", scalar_result);
         printf("Tiempo de ejecución escalar: %.4f microsegundos \n", scalar_time / ITERATIONS);
 
-    clock_gettime(CLOCK_MONOTONIC,&start);
+    
     for(i=0; i < ITERATIONS; i++)
     {
+      clock_gettime(CLOCK_MONOTONIC,&t0);
       neon_mult_and_acc(array_a,array_b,&neon_result, ARRAY_SIZE);
+      clock_gettime(CLOCK_MONOTONIC,&end);
+      neon_time += get_time_diff(t0,t1);
     }
-    clock_gettime(CLOCK_MONOTONIC,&end);
-    double neon_time = get_time_diff(start,end);
-    printf("Resultado escalar: %.4f \n",neon_result);
-    printf("Tiempo de ejecución SIMD: %.f microsegundos \n",neon_time);
+    
+    printf("Resultado NEON: %.4f \n",neon_result);
+    printf("Tiempo de ejecución NEON: %.f microsegundos \n",neon_time / ITERATIONS);
     
     printf("Porcentaje de mejora: %.2f%% \n", (float)(scalar_time/neon_time)*100);
 }
