@@ -82,5 +82,5 @@ void main(int argc, char** argv){
     printf("Resultado NEON: %.4f \n",neon_result);
     printf("Tiempo de ejecución NEON: %.f nanosegundos \n",neon_time / ITERATIONS);
     
-    printf("Porcentaje de mejora: %.2f%% \n", (float)(scalar_time/neon_time)*100);
+    printf("Porcentaje de mejora: %.2f%% \n", (float)((scalar_time - neon_time)/scalar_time)*100);
 }
