@@ -150,15 +150,3 @@ void neon_mult_and_acc(const float* a, const float* b, float* result, int size)
 ```Bash
 gcc -O3 neon_intrinsics.c -o neon_manual
 ```
-
-**Resultado:**
-```Bash
-./neon_manual
-Resultado escalar: 1033.4281
-Tiempo de ejecución escalar: 40207.2840 nanosegundos
-Resultado NEON: 1033.4296
-Tiempo de ejecución NEON: 19887 nanosegundos
-Porcentaje de mejora: 202.18%
-```
-
-¡202%! Tenemos un claro método ganador. Si ejecután varias veces el programa notarán que hay una variación de entre 160 - 205%. El problema con este método es que requiere bastante tiempo de lectura de la documentación, elección de la intrincios adecuados y desarrollo del programa. Una alternativa más rápida es usar la librerías como [ARM Compute Library](https://www.arm.com/products/development-tools/embedded-and-software/compute-library) y [Ne10](https://projectne10.github.io/Ne10/) que proveen funciones matemáticas como filtros, FFT y operaciones vectoriales que ya están optmizadas con NEON.
