@@ -23,7 +23,7 @@ for(j=0;j<ARRAY_SIZE;j++)
    result += array_a[j]*array_b[j];
 }
 ```
-Vamos a demostrar ahora que no basta con utilizar las [banderas](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html) `-o3`/`-Ofast` para que el compilador utilice las instrucciones vectoriales NEON. Para esto creamos un Makefile con dos targets: uno normal con la bandera `-o3` y otro con las banderas especiales para procesadores ARM. 
+Vamos a demostrar ahora que no basta con utilizar las [banderas](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html) `-o3`/`-Ofast` para que el compilador utilice las instrucciones vectoriales NEON. Para esto creamos un Makefile con dos targets: uno normal con la bandera `-o3` y otro con las [banderas especiales para procesadores ARM](https://gcc.gnu.org/onlinedocs/gcc/AArch64-Options.html). 
 
 >**NOTA**: Si no estas familiarizado con gcc o make, puedes revisar [esta](https://github.com/rescurib/Curso_Sistemas_Embebidos/tree/main/CursoSTM32/Lec_2/Practica_2_0) y [esta otra](https://github.com/rescurib/Curso_Sistemas_Embebidos/tree/main/CursoSTM32/Lec_2/Practica_2_1) práctica de mi curso de sistemas embebidos.
 
