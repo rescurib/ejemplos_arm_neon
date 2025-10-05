@@ -161,4 +161,4 @@ Tiempo de ejecución NEON: 19887 nanosegundos
 Porcentaje de mejora: 202.18%
 ```
 
-¡202%! Tenemos un claro método ganador. Si ejecután varias veces el programa notarán que hay una variación de entre 160 - 205%. El problema con este método es que requiere bastante tiempo de lectura de la documentación, elección de la intrincios adecuados y desarrollo del programa. Una alternativa más rápida es usar la librería [Ne10](https://projectne10.github.io/Ne10/) que provee de funciones matemáticas como filtros, FFT y operaciones vectoriales que ya están optmizadas con NEON.
+¡202%! Tenemos un claro método ganador. Si ejecután varias veces el programa notarán que hay una variación de entre 160 - 205%. El problema con este método es que requiere bastante tiempo de lectura de la documentación, elección de la intrincios adecuados y desarrollo del programa. Una alternativa más rápida es usar la librerías como [ARM Compute Library](https://www.arm.com/products/development-tools/embedded-and-software/compute-library) y [Ne10](https://projectne10.github.io/Ne10/) que proveen funciones matemáticas como filtros, FFT y operaciones vectoriales que ya están optmizadas con NEON.
