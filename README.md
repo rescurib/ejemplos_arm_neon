@@ -135,13 +135,25 @@ void neon_mult_and_acc(const float* a, const float* b, float* result, int size)
 }
 ```
 
+| Intrinsic | Descripción | Tipo devuelto | Equivalente conceptual |
+| --------- | ----------- | --------------|----------------------- |
+| `vdupq_n_f32(x)`       | Crea un vector de 4 elementos (`float32x4_t`) donde **`x` es asignado a todos los elementos**. Se usa para inicializar el acumulador. | `float32x4_t` | `[x, x, x, x]`                       |
+| `vld1q_f32(ptr)`       | Carga **4 valores consecutivos** desde la memoria apuntada por `ptr` en un registro NEON de 128 bits.                                         | `float32x4_t` | `[*ptr[0], *ptr[1], *ptr[2], *ptr[3]]`   |
+| `vmlaq_f32(acc, a, b)` | Realiza una **operación vectorial de multiplicar y acumular**: `acc + (a * b)` para cada elemento del vector.                                 | `float32x4_t` | `for(i=0..3) acc[i] += a[i] * b[i];` |
+| `vget_low_f32(v)`      | Extrae los **dos elementos inferiores** de un vector de 4 floats.                                                                             | `float32x2_t` | `[v[0], v[1]]`                       |
+| `vget_high_f32(v)`     | Extrae los **dos elementos superiores** de un vector de 4 floats.                                                                             | `float32x2_t` | `[v[2], v[3]]`                       |
+| `vadd_f32(a, b)`       | Suma dos vectores de 2 floats elemento a elemento.                                                                                            | `float32x2_t` | `[a[0]+b[0], a[1]+b[1]]`             |
+| `vget_lane_f32(v, n)`  | Devuelve el valor del **elemento `n`** (0 o 1) del vector de 2 floats.                                                                        | `float`       | `v[n]`                               |
+
+
 **Compilación**:
 ```Bash
-gcc -O3 neon_intrinsics.c -o neon_manual -lm
+gcc -O3 neon_intrinsics.c -o neon_manual
 ```
 
 **Resultado:**
 ```Bash
+./neon_manual
 Resultado escalar: 1033.4281
 Tiempo de ejecución escalar: 40207.2840 nanosegundos
 Resultado NEON: 1033.4296
@@ -149,4 +161,4 @@ Tiempo de ejecución NEON: 19887 nanosegundos
 Porcentaje de mejora: 202.18%
 ```
 
-¡202%! Hay un claro método ganador. 
+¡202%! Tenemos un claro método ganador. Si ejecután varias veces el programa notarán que hay una variación de entre 160 - 205%. El problema con este método es que requiere bastante tiempo de lectura de la documentación, elección de la intrincios adecuados y desarrollo del programa. Una alternativa más rápida es usar la librería [Ne10](https://projectne10.github.io/Ne10/) que provee de funciones matemáticas como filtros, FFT y operaciones vectoriales que ya están optmizadas con NEON.
