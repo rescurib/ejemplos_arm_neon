@@ -161,3 +161,6 @@ Tiempo de ejecución NEON: 16521 nanosegundos
 Porcentaje de mejora: 57.57%
 ```
 El desempeño es comparable. Si ejecutan varias veces el programa notarán que hay una variación bastante grande de entre 47-67%. Hay que tomar en cuenta la carga del sistema operativo y que hago las mediciones y promedios en un mismo hilo. También el algoritmo puede mejorarse aún más. Una implemetación manual bien hecha puede vencer al compilador en desempeño. El problema con este método es que requiere bastante tiempo de lectura de la documentación, elección de la intrincios adecuados y desarrollo del programa de forma eficiente. Una alternativa más rápida es usar la librerías como [ARM Compute Library](https://www.arm.com/products/development-tools/embedded-and-software/compute-library) y [Ne10](https://projectne10.github.io/Ne10/) que proveen funciones matemáticas como filtros, FFT y operaciones vectoriales que ya están optmizadas con NEON.
+
+## Otros recursos
+[*Taming ARMv8 NEON: from theory to benchmark results*](https://www.youtube.com/live/ixuDntaSnHI?si=QBLfbqPW6BFXiDt_), talk
